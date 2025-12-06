@@ -1,0 +1,152 @@
+[gd_scene load_steps=21 format=3 uid="uid://beat3exfrcl0t"]
+
+[ext_resource type="Script" uid="uid://clph70ojtetwj" path="res://objects/teleport.gd" id="1_5rthq"]
+[ext_resource type="Texture2D" uid="uid://c7e0itrkb4st" path="res://objects/gen_anim.png" id="1_yf4fa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yf4fa"]
+size = Vector2(47, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rthq"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(0, 0, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ke6qo"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(91, 0, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffg5a"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(182, 0, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_07xqo"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(0, 115, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_derfw"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(91, 115, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n6kf"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(182, 115, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qo1m"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(0, 230, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_58v6d"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(91, 230, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hk0fr"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(182, 230, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pt7o1"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(0, 345, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxphi"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(91, 345, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4l3dh"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(182, 345, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihbg3"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(0, 460, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uh35n"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(91, 460, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dhts"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(182, 460, 91, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wi72l"]
+atlas = ExtResource("1_yf4fa")
+region = Rect2(0, 0, 91, 115)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lvnmu"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_5rthq")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_ke6qo")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_ffg5a")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_07xqo")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_derfw")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_1n6kf")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_0qo1m")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_58v6d")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_hk0fr")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_pt7o1")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_bxphi")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_4l3dh")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_ihbg3")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_uh35n")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_3dhts")
+}],
+"loop": false,
+"name": &"Teleport",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wi72l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Teleport" type="Node2D"]
+z_index = 1
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_5rthq")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_yf4fa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lvnmu")
+animation = &"Teleport"
+frame = 14
+frame_progress = 1.0
+
+[connection signal="body_shape_entered" from="Area2D" to="." method="_on_area_2d_body_shape_entered"]
+[connection signal="body_shape_exited" from="Area2D" to="." method="_on_area_2d_body_shape_exited"]

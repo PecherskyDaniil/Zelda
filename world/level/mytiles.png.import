@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do2nxdpbsp1v"
-path="res://.godot/imported/level1.png-e58270f9e89bf5e8839b2febea04c245.ctex"
+uid="uid://dyaivojumjccs"
+path="res://.godot/imported/mytiles.png-db7415917b20de763c33612bcf6aa807.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/level_structures/level1.png"
-dest_files=["res://.godot/imported/level1.png-e58270f9e89bf5e8839b2febea04c245.ctex"]
+source_file="res://world/level/mytiles.png"
+dest_files=["res://.godot/imported/mytiles.png-db7415917b20de763c33612bcf6aa807.ctex"]
 
 [params]
 

@@ -27,6 +27,7 @@ func handle_idle(delta):
 		current_move_state=move_state.WALK
 	
 func handle_walk(delta):
+	print(global_position)
 	var direction=Input.get_vector("left","right","up","down")
 	if Input.is_action_pressed("right") || Input.is_action_pressed("left"):
 		direction.y=0

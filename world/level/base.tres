@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cjubk1akc4c54"]
 
-[ext_resource type="Texture2D" uid="uid://dyaivojumjccs" path="res://world/library/mytiles.png" id="1_jsamo"]
+[ext_resource type="Texture2D" uid="uid://dyaivojumjccs" path="res://world/level/mytiles.png" id="1_jsamo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkok3"]
 texture = ExtResource("1_jsamo")
@@ -149,6 +149,7 @@ texture = ExtResource("1_jsamo")
 0:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, 0, 7, 6, 6, 8, -6, 8, -7, 6, -8, 0)
 3:5/0 = 0
 3:5/0/z_index = 3
+3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, 0, 4, 0, 4, 8, -4, 8)
 1:5/size_in_atlas = Vector2i(2, 1)
 1:5/0 = 0
 1:5/0/z_index = 3

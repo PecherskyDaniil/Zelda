@@ -9,8 +9,7 @@ const OBJECT_COLOR:= Color.YELLOW
 const EMPTY_COLOR := Color(0, 0, 0, 0)  # Прозрачный
 var BASE_WALL_TILE=Vector2i(14,0)
 var FLOOR_TILE=Vector2i(1,2)
-
-
+var teleport_pos=Vector2i(0,0)
 const MORPHOLOGY_TEMPLATES: Dictionary = {
 	# Угловые стены
 	"111111111":Vector2i(12,0),
@@ -33,7 +32,8 @@ const MORPHOLOGY_TEMPLATES: Dictionary = {
 	"*00110*1*":Vector2i(14,4),
 	"00*011*1*":Vector2i(15,4),
 }
-
+func get_teleport_pos():
+	return teleport_pos
 func generate_from_png(base_tile_map:TileMapLayer,objects_tile_map:TileMapLayer,image_path: String) -> void:
 	# 1. Загружаем и парсим PNG
 	var grid = load_image_to_grid(image_path)
@@ -48,10 +48,12 @@ func generate_from_png(base_tile_map:TileMapLayer,objects_tile_map:TileMapLayer,
 		for y in range(grid[0].size()):
 			if grid[x][y] == 1:  # Стена
 				base_tile_map.set_cell(Vector2i(x, y), 0, BASE_WALL_TILE)
-			elif grid[x][y] == 0 or grid[x][y] == 3:  # Пол
+			elif grid[x][y] == 0 or grid[x][y] == 3 or grid[x][y]==2:  # Пол
 				base_tile_map.set_cell(Vector2i(x, y), 0, FLOOR_TILE)
 				if  grid[x][y] == 3:
 					objects_tile_map.set_cell(Vector2i(x,y),0,Vector2i(randi_range(3,5),5))
+				if  grid[x][y] == 2:
+					teleport_pos=objects_tile_map.map_to_local(Vector2i(x,y))
 	# 4. Применяем морфологические шаблоны
 	apply_morphology_templates(base_tile_map,grid)
 func load_image_to_grid(image_path: String) -> Array:
@@ -78,6 +80,8 @@ func load_image_to_grid(image_path: String) -> Array:
 				grid[x][y] = 1
 			elif color == Color.YELLOW:
 				grid[x][y] = 3
+			elif color == Color.GREEN:
+				grid[x][y] = 2
 			else:
 				grid[x][y] = 0
 	
