@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dnvqd1dmtskcn"]
+[gd_scene load_steps=9 format=3 uid="uid://dnvqd1dmtskcn"]
 
 [ext_resource type="Script" uid="uid://hpukbcudx53w" path="res://player/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://dmlgi0bwt7l8n" path="res://player/free_overview.png" id="2_i3pqv"]
+[ext_resource type="PackedScene" uid="uid://dvqgpx80sab6y" path="res://items/sword_1.tscn" id="3_g1dw6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
 size = Vector2(14, 13)
@@ -81,3 +82,7 @@ zoom = Vector2(3, 3)
 libraries = {
 &"": SubResource("AnimationLibrary_qjkh3")
 }
+
+[node name="hands" type="Node2D" parent="."]
+
+[node name="sword1" parent="hands" instance=ExtResource("3_g1dw6")]

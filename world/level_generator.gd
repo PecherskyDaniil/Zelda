@@ -10,6 +10,8 @@ const EMPTY_COLOR := Color(0, 0, 0, 0)  # Прозрачный
 var BASE_WALL_TILE=Vector2i(14,0)
 var FLOOR_TILE=Vector2i(1,2)
 var teleport_pos=Vector2i(0,0)
+
+var size:Vector2i=Vector2i(0,0)
 const MORPHOLOGY_TEMPLATES: Dictionary = {
 	# Угловые стены
 	"111111111":Vector2i(12,0),
@@ -44,6 +46,7 @@ func generate_from_png(base_tile_map:TileMapLayer,objects_tile_map:TileMapLayer,
 	base_tile_map.clear()
 	objects_tile_map.clear()
 	# 3. Сначала расставляем базовые тайлы
+	size=Vector2i(grid.size(),grid[0].size())
 	for x in range(grid.size()):
 		for y in range(grid[0].size()):
 			if grid[x][y] == 1:  # Стена

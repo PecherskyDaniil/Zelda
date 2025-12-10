@@ -19,8 +19,10 @@ var current_move_state:move_state=move_state.IDLE
 var current_object_state:object_state=object_state.EXIST
 var speed:float=200.0
 var idle_name="idle_front"
-@onready var world_object=$"../world/library"
-	
+
+
+@onready var sword:Node2D=get_node("hands/sword1")
+
 func handle_idle(delta):
 	var direction=Input.get_vector("left","right","up","down")
 	if direction!=Vector2.ZERO:
@@ -37,14 +39,21 @@ func handle_walk(delta):
 	if direction==Vector2.ZERO:
 		current_move_state=move_state.IDLE
 	if direction==Vector2.DOWN:
+		sword.rotation=deg_to_rad(0)
 		idle_name="idle_front"
 	if direction==Vector2.UP:
+		sword.rotation=deg_to_rad(180)
 		idle_name="idle_back"
 	if direction==Vector2.LEFT:
+		sword.rotation=deg_to_rad(90)
 		idle_name="idle_left"
 	if direction==Vector2.RIGHT:
+		sword.rotation=deg_to_rad(-90)
 		idle_name="idle_right"
 	velocity=direction.normalized()*speed
+
+func handle_hit(delta):
+	sword.hit()
 
 func get_damage(damage:int):
 	player_health-=damage
@@ -60,6 +69,7 @@ func handle_collisions(delta):
 
 func handle_exist(delta):
 	anim_player.play("exist")
+	
 func handle_not_exist(delta):
 	hitted_time_expired-=delta
 	if hitted_time_expired<=0.0:
@@ -80,5 +90,8 @@ func _physics_process(delta: float) -> void:
 			handle_exist(delta)
 		object_state.NOT_EXIST:
 			handle_not_exist(delta)
+	
+	if Input.is_action_pressed("hit"):
+		handle_hit(delta)
 	handle_collisions(delta)	
 	move_and_slide()

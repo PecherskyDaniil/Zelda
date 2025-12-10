@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://ckwn538lsourk"]
+
+[ext_resource type="Texture2D" uid="uid://cor4sd8mn7ctl" path="res://enemy/enemy.png" id="1_2mvqj"]
+[ext_resource type="Script" uid="uid://cghj05y2d0mq0" path="res://enemy/enemy.gd" id="1_ofsxj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ofsxj"]
+radius = 12.0416
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ppra6"]
+radius = 29.0689
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ofsxj"]
+radius = 7.0
+height = 22.0
+
+[node name="enemy" type="CharacterBody2D"]
+script = ExtResource("1_ofsxj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(4, -2)
+scale = Vector2(0.0489865, 0.0456081)
+texture = ExtResource("1_2mvqj")
+
+[node name="damage_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="damage_area"]
+shape = SubResource("CircleShape2D_ofsxj")
+
+[node name="vision_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="vision_area"]
+shape = SubResource("CircleShape2D_ppra6")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ofsxj")
