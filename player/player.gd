@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-enum move_state{IDLE,WALK}
+enum move_state{IDLE,WALK, HIT}
 enum object_state{EXIST,NOT_EXIST}
 var MAX_PLAYER_HEALTH:int = 5
 var ON_HIT_TIME:float=3.0
@@ -12,7 +12,7 @@ var player_health:int = MAX_PLAYER_HEALTH
 
 var coins:float=0.0
 var keys:int=0
-
+var hit_time=0
 
 @onready var anim_player=$AnimationPlayer
 var current_move_state:move_state=move_state.IDLE
@@ -22,6 +22,10 @@ var idle_name="idle_front"
 
 
 @onready var sword:Node2D=get_node("hands/sword1")
+
+
+@onready var camera:Camera2D=$Camera2D
+@onready var screen_size = get_viewport_rect().size
 
 func handle_idle(delta):
 	var direction=Input.get_vector("left","right","up","down")
@@ -53,7 +57,11 @@ func handle_walk(delta):
 	velocity=direction.normalized()*speed
 
 func handle_hit(delta):
+	velocity=Vector2(0,0)
 	sword.hit()
+	hit_time=sword.HIT_TIME
+	current_move_state=move_state.HIT
+	
 
 func get_damage(damage:int):
 	player_health-=damage
@@ -77,13 +85,35 @@ func handle_not_exist(delta):
 		current_object_state=object_state.EXIST
 	anim_player.play("not_exist")
 
+func move_camera(pos):
+	camera.limit_bottom=pos.y
+	camera.limit_top=pos.y
+	camera.limit_left=pos.x
+	camera.limit_right=pos.x
+
+func manage_camera(pos:Vector2):
+	var camera_pos=Vector2(camera.limit_left, camera.limit_bottom)
+	if int(global_position.y)<int(camera_pos.y-screen_size.y/(2*camera.zoom.y)):
+		move_camera(Vector2(camera_pos.x,camera_pos.y-screen_size.y/camera.zoom.y))
+	elif int(global_position.y)>int(camera_pos.y+screen_size.y/(2*camera.zoom.y)):
+		move_camera(Vector2(camera_pos.x,camera_pos.y+screen_size.y/camera.zoom.y))
+	elif int(global_position.x)<int(camera_pos.x-screen_size.x/(2*camera.zoom.x)):
+		move_camera(Vector2(camera_pos.x-screen_size.x/camera.zoom.x,camera_pos.y))
+	elif int(global_position.x)>int(camera_pos.x+screen_size.x/(2*camera.zoom.x)):
+		move_camera(Vector2(camera_pos.x+screen_size.x/camera.zoom.x,camera_pos.y))
 
 func _physics_process(delta: float) -> void:
+	manage_camera(global_position)
 	match current_move_state:
 		move_state.IDLE:
 			handle_idle(delta)
 		move_state.WALK:
 			handle_walk(delta)
+		move_state.HIT:
+			if hit_time>0:
+				hit_time-=delta
+			else:
+				current_move_state=move_state.IDLE
 	
 	match current_object_state:
 		object_state.EXIST:
@@ -91,7 +121,7 @@ func _physics_process(delta: float) -> void:
 		object_state.NOT_EXIST:
 			handle_not_exist(delta)
 	
-	if Input.is_action_pressed("hit"):
+	if Input.is_action_pressed("hit") and current_move_state!=move_state.HIT:
 		handle_hit(delta)
 	handle_collisions(delta)	
 	move_and_slide()

@@ -7,7 +7,6 @@ extends CharacterBody2D
 
 @onready var damage_area: Area2D = $damage_area
 @onready var vision_area: Area2D = $vision_area
-
 # Состояния: "patrol", "chase", "idle"
 var current_state = "patrol"
 var target_node: Node2D = null
@@ -24,6 +23,19 @@ var possible_directions = [
 var current_dir_index = 0
 var move_direction: Vector2 = Vector2.RIGHT
 
+func is_visible_on_player_camera(pos:Vector2) -> bool:
+	var camera = get_viewport().get_camera_2d()
+	if not camera:
+		return false
+	var viewport = get_viewport()
+	var viewport_size = viewport.get_visible_rect().size
+	return (
+		pos.x < camera.limit_left+viewport_size.x/(camera.zoom.x*2) and
+		pos.x > camera.limit_left-viewport_size.x/(camera.zoom.x*2) and
+		pos.y < camera.limit_top+viewport_size.y/(camera.zoom.y*2) and
+		pos.y > camera.limit_top-viewport_size.y/(camera.zoom.y*2)
+	)
+
 func _ready():
 	# Начинаем с случайного направления
 	current_dir_index = randi_range(0, 3)
@@ -36,23 +48,24 @@ func _ready():
 	vision_area.body_exited.connect(_on_vision_area_body_exited)
 
 func _physics_process(delta):
-	# Обновляем таймеры
-	direction_timer -= delta
-	if stalk_timer > 0:
-		stalk_timer -= delta
-		if stalk_timer <= 0 and current_state == "chase":
-			stop_chasing()
-	
-	# Движение в зависимости от состояния
-	match current_state:
-		"patrol":
-			patrol_behavior(delta)
-		"chase":
-			chase_behavior(delta)
-	
-	# Применяем движение и проверяем коллизии
-	var was_moving = move_and_slide()
-	check_collisions()
+	if is_visible_on_player_camera(global_position):
+		# Обновляем таймеры
+		direction_timer -= delta
+		if stalk_timer > 0:
+			stalk_timer -= delta
+			if stalk_timer <= 0 and current_state == "chase":
+				stop_chasing()
+		
+		# Движение в зависимости от состояния
+		match current_state:
+			"patrol":
+				patrol_behavior(delta)
+			"chase":
+				chase_behavior(delta)
+		
+		# Применяем движение и проверяем коллизии
+		var was_moving = move_and_slide()
+		check_collisions()
 
 #=== ПАТРУЛИРОВАНИЕ ===
 func patrol_behavior(delta):

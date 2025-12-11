@@ -75,9 +75,6 @@ region_rect = Rect2(1214.17, 915.659, 32.1947, 44.9676)
 position = Vector2(0, 6.5)
 shape = SubResource("RectangleShape2D_hqtel")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_qjkh3")
@@ -86,3 +83,10 @@ libraries = {
 [node name="hands" type="Node2D" parent="."]
 
 [node name="sword1" parent="hands" instance=ExtResource("3_g1dw6")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+limit_left = 192
+limit_top = 108
+limit_right = 192
+limit_bottom = 108
