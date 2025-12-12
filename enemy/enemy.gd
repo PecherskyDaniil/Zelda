@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var stalk_time: float = 10.0
 @export var move_speed: float = 80.0
-@export var damage: int = 10
+@export var damage: int = 1
 @export var change_direction_time: float = 2.0
 
 @onready var damage_area: Area2D = $damage_area

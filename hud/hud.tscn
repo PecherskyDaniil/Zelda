@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpkm0apb18y3c"]
+
+[ext_resource type="Script" uid="uid://deho7nyp7e3f" path="res://hud/Health.gd" id="1_2gk58"]
+[ext_resource type="PackedScene" uid="uid://ttf4opv4vuiv" path="res://hud/container.tscn" id="2_318vg"]
+[ext_resource type="Texture2D" uid="uid://c8wsr7wne7t1u" path="res://items/sword1.png" id="3_318vg"]
+[ext_resource type="PackedScene" uid="uid://bo7g48ddsqmd7" path="res://hud/map.tscn" id="4_w8tcp"]
+
+[node name="HUD" type="CanvasLayer"]
+scale = Vector2(3, 3)
+transform = Transform2D(3, 0, 0, 3, 0, 0)
+
+[node name="Health" type="GridContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.27100003
+anchor_top = 0.017
+anchor_right = 0.27100003
+anchor_bottom = 0.017
+offset_left = -40.52533
+offset_top = -10.682668
+offset_right = 71.47467
+offset_bottom = 38.984
+columns = 8
+script = ExtResource("1_2gk58")
+
+[node name="Container" parent="." instance=ExtResource("2_318vg")]
+position = Vector2(216.00002, 12.666667)
+item = ExtResource("3_318vg")
+
+[node name="Container2" parent="." instance=ExtResource("2_318vg")]
+position = Vector2(178.66667, 12.666667)
+
+[node name="Map" parent="." instance=ExtResource("4_w8tcp")]

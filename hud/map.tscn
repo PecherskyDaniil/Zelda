@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo7g48ddsqmd7"]
+
+[ext_resource type="Script" uid="uid://bdyuc2c2r5m65" path="res://hud/map.gd" id="1_0d7hu"]
+[ext_resource type="Texture2D" uid="uid://v31rugh2owo2" path="res://hud/marker.png" id="2_iim1n"]
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_0d7hu")
+
+[node name="Map" type="TextureRect" parent="."]
+offset_right = 64.0
+offset_bottom = 64.0
+expand_mode = 1
+
+[node name="Marker" type="TextureRect" parent="."]
+offset_right = 3.0
+offset_bottom = 3.0
+texture = ExtResource("2_iim1n")
+expand_mode = 1

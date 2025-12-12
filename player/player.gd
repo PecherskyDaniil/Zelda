@@ -2,13 +2,11 @@ extends CharacterBody2D
 
 enum move_state{IDLE,WALK, HIT}
 enum object_state{EXIST,NOT_EXIST}
-var MAX_PLAYER_HEALTH:int = 5
 var ON_HIT_TIME:float=3.0
 
 signal player_dead
 
 var hitted_time_expired:float=0
-var player_health:int = MAX_PLAYER_HEALTH
 
 var coins:float=0.0
 var keys:int=0
@@ -64,8 +62,9 @@ func handle_hit(delta):
 	
 
 func get_damage(damage:int):
-	player_health-=damage
-	if player_health<=0:
+	GameManager.player_health-=damage
+	GameManager.health_changed.emit()
+	if GameManager.player_health<=0:
 		player_dead.emit()
 		print("I DEAD")
 	hitted_time_expired=ON_HIT_TIME
@@ -103,6 +102,7 @@ func manage_camera(pos:Vector2):
 		move_camera(Vector2(camera_pos.x+screen_size.x/camera.zoom.x,camera_pos.y))
 
 func _physics_process(delta: float) -> void:
+	GameManager.player_global_pos=global_position
 	manage_camera(global_position)
 	match current_move_state:
 		move_state.IDLE:

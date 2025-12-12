@@ -6,6 +6,7 @@ extends Node2D
 var wall:Vector2i=Vector2i(14,0)
 var floor:Vector2i=Vector2i(1,2)
 var spawn_pos=Vector2(0,0)
+var random_level:String
 @onready var teleport_scene:PackedScene = preload("res://objects/teleport.tscn")
 @onready var enemy_scene:PackedScene=preload("res://enemy/enemy.tscn")
 var level_size:Vector2i
@@ -24,7 +25,7 @@ func generate_random_level() -> void:
 			file_name = dir.get_next()
 	
 	if level_files.size() > 0:
-		var random_level = level_files[randi() % level_files.size()]
+		random_level = level_files[randi() % level_files.size()]
 		var lg=level_generator.new()
 		lg.generate_from_png(tile_map,objects_tile_map,random_level)
 		var teleport=teleport_scene.instantiate()

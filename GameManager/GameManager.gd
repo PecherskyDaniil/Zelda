@@ -1,11 +1,15 @@
 extends Node
 
 var random_level="res://world/level/level.tscn"
-
+var MAX_PLAYER_HEALTH:int = 40
+var player_health:int = MAX_PLAYER_HEALTH
+signal level_changed(map)
+signal health_changed(current, max)
 var world: Node2D = null
 var player: CharacterBody2D=null
 var current_level:Node2D = null
 var level_count=0
+var player_global_pos:Vector2
 func _set_world(node:Node2D):
 	world=node
 	
@@ -24,3 +28,5 @@ func _load_level():
 		world.add_child(current_level)
 	if player:
 		current_level._place_character(player)
+	var map = current_level.random_level
+	level_changed.emit(map)
