@@ -2,7 +2,7 @@ extends Node2D
 
 
 
-@onready var level_generator = load("res://world/level_generator.gd")
+@onready var level_generator = preload("res://world/level_generator.gd")
 @onready var tile_map: TileMapLayer = $floor_and_walls
 @onready var objects_tile_map:TileMapLayer = $objects
 var wall:Vector2i=Vector2i(14,0)
@@ -12,12 +12,31 @@ var random_level:String
 @onready var teleport_scene:PackedScene = preload("res://objects/teleport.tscn")
 @onready var enemy_scene:PackedScene=preload("res://enemy/enemy.tscn")
 @onready var crate_scene:PackedScene=preload("res://objects/crate.tscn")
+@export var teleport_closed_default_state:bool=true
+
 var level_size:Vector2i
 @export var enemy_count:int=10
 @export var crates_count:int=20
 @onready var teleport=teleport_scene.instantiate()
+@export var level_path:String=""
+
 func _ready() -> void:
-	generate_random_level()
+	if level_path!="":
+		generate_special_level(level_path)
+	else:
+		generate_random_level()
+
+func generate_special_level(level_path:String)->void:
+	var lg=level_generator.new()
+	lg.generate_from_png(tile_map,objects_tile_map,level_path)
+	random_level=level_path
+	level_size=lg.size
+	teleport.global_position=Vector2(lg.get_teleport_pos())
+	teleport.closed=teleport_closed_default_state
+	spawn_pos=Vector2(lg.get_teleport_pos())
+	add_child(teleport)
+	place_enemies(enemy_count)
+	place_crates(crates_count)
 
 func generate_random_level() -> void:
 	var level_files := []
@@ -32,16 +51,7 @@ func generate_random_level() -> void:
 	
 	if level_files.size() > 0:
 		random_level = level_files[randi() % level_files.size()]
-		var lg=level_generator.new()
-		lg.generate_from_png(tile_map,objects_tile_map,random_level)
-		
-		#print(lg.get_teleport_pos())
-		level_size=lg.size
-		teleport.global_position=Vector2(lg.get_teleport_pos())
-		spawn_pos=Vector2(lg.get_teleport_pos())
-		add_child(teleport)
-		place_enemies(enemy_count)
-		place_crates(crates_count)
+		generate_special_level(random_level)
 
 func place_enemies(enemy_count:int):
 	var placed_enemies=0

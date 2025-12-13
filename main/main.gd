@@ -7,5 +7,5 @@ func _ready():
 	var player = player_scene.instantiate()
 	GameManager._set_player(player)
 	GameManager._set_world($world)
-	GameManager._load_level()
+	GameManager._load_hub()
 	$world.add_child(player)

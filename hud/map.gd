@@ -3,7 +3,7 @@ extends Node2D
 @onready var map_vis=$Map
 @onready var marker= $Marker
 func _ready() -> void:
-	map_vis.texture=load("res://world/level_structures/level1.png")
+	map_vis.texture=load("res://world/hub/hub.png")
 	GameManager.level_changed.connect(load_map)
 
 func load_map(map):
