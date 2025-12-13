@@ -13,4 +13,3 @@ func _process(delta: float) -> void:
 	if GameManager.player_global_pos and map_vis:
 		marker.position.x=GameManager.player_global_pos.x*(64/(map_vis.texture.get_size().x*16))-1.5
 		marker.position.y=GameManager.player_global_pos.y*(64/(map_vis.texture.get_size().y*16))-1.5
-		print(marker.global_position)

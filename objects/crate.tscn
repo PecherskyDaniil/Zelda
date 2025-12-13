@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbin350jsf3if"]
+
+[ext_resource type="Script" uid="uid://dovkrwlg74x22" path="res://objects/crate.gd" id="1_qvndx"]
+[ext_resource type="Texture2D" uid="uid://d0pqddjrdmqbl" path="res://objects/d381770cf0903c182572bb8416067dc5.jpg" id="1_qx60w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qvndx"]
+size = Vector2(18, 18)
+
+[node name="crate" type="StaticBody2D"]
+script = ExtResource("1_qvndx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_qx60w")
+region_enabled = true
+region_rect = Rect2(58.0302, 47.2146, 182.945, 181.802)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qvndx")

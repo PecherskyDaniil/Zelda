@@ -1,5 +1,7 @@
 extends Node2D
 
+
+
 @onready var level_generator = load("res://world/level_generator.gd")
 @onready var tile_map: TileMapLayer = $floor_and_walls
 @onready var objects_tile_map:TileMapLayer = $objects
@@ -9,7 +11,11 @@ var spawn_pos=Vector2(0,0)
 var random_level:String
 @onready var teleport_scene:PackedScene = preload("res://objects/teleport.tscn")
 @onready var enemy_scene:PackedScene=preload("res://enemy/enemy.tscn")
+@onready var crate_scene:PackedScene=preload("res://objects/crate.tscn")
 var level_size:Vector2i
+@export var enemy_count:int=10
+@export var crates_count:int=20
+@onready var teleport=teleport_scene.instantiate()
 func _ready() -> void:
 	generate_random_level()
 
@@ -28,30 +34,49 @@ func generate_random_level() -> void:
 		random_level = level_files[randi() % level_files.size()]
 		var lg=level_generator.new()
 		lg.generate_from_png(tile_map,objects_tile_map,random_level)
-		var teleport=teleport_scene.instantiate()
+		
 		#print(lg.get_teleport_pos())
 		level_size=lg.size
 		teleport.global_position=Vector2(lg.get_teleport_pos())
 		spawn_pos=Vector2(lg.get_teleport_pos())
 		add_child(teleport)
-		place_enemies(10)
+		place_enemies(enemy_count)
+		place_crates(crates_count)
 
 func place_enemies(enemy_count:int):
-	for i in enemy_count:
+	var placed_enemies=0
+	while placed_enemies<enemy_count:
 		var pos=Vector2i(randi_range(0,level_size.x-1),randi_range(0,level_size.y-1))
 		var tile:TileData=tile_map.get_cell_tile_data(pos)
 		if tile!=null and tile.get_collision_polygons_count(0)==0:
+			placed_enemies+=1
 			var enemy=enemy_scene.instantiate()
 			place_object(enemy,pos)
-			
-			
+			enemy.enemy_killed.connect(_on_enemy_killed)
+
+func place_crates(crates_count:int):
+	var placed_crates=0
+	while placed_crates<crates_count:
+		var pos=Vector2i(randi_range(0,level_size.x-1),randi_range(0,level_size.y-1))
+		if Vector2(pos)==spawn_pos:
+			continue
+		var ground_tile:TileData=tile_map.get_cell_tile_data(pos)
+		var object_tile:TileData=objects_tile_map.get_cell_tile_data(pos)
+		if ground_tile!=null and ground_tile.get_collision_polygons_count(0)==0 and object_tile==null:
+			placed_crates+=1
+			var crate=crate_scene.instantiate()
+			place_object(crate,pos)
+
+func _on_enemy_killed():
+	enemy_count-=1
+	if enemy_count<=0:
+		teleport.closed=false
+
 func place_object(object:Node2D,pos:Vector2i):
 	add_child(object)
 	object.global_position=tile_map.map_to_local(pos)
 
-# Или через кнопку в UI
-#func _on_generate_button_pressed() -> void:
-#   level_generator.generate_level_from_png("res://levels/level_structures/level1.png")
 
 func _place_character(character:CharacterBody2D):
 	character.global_position=spawn_pos
+	character.shade()

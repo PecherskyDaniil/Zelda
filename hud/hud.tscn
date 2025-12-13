@@ -11,22 +11,22 @@ transform = Transform2D(3, 0, 0, 3, 0, 0)
 
 [node name="Health" type="GridContainer" parent="."]
 anchors_preset = -1
-anchor_left = 0.27100003
+anchor_left = 0.271
 anchor_top = 0.017
-anchor_right = 0.27100003
+anchor_right = 0.271
 anchor_bottom = 0.017
-offset_left = -40.52533
-offset_top = -10.682668
-offset_right = 71.47467
+offset_left = -40.5253
+offset_top = -10.6827
+offset_right = 71.4747
 offset_bottom = 38.984
 columns = 8
 script = ExtResource("1_2gk58")
 
 [node name="Container" parent="." instance=ExtResource("2_318vg")]
-position = Vector2(216.00002, 12.666667)
+position = Vector2(216, 12.6667)
 item = ExtResource("3_318vg")
 
 [node name="Container2" parent="." instance=ExtResource("2_318vg")]
-position = Vector2(178.66667, 12.666667)
+position = Vector2(178.667, 12.6667)
 
 [node name="Map" parent="." instance=ExtResource("4_w8tcp")]

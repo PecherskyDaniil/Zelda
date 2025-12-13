@@ -31,7 +31,6 @@ func handle_idle(delta):
 		current_move_state=move_state.WALK
 	
 func handle_walk(delta):
-	print(global_position)
 	var direction=Input.get_vector("left","right","up","down")
 	if Input.is_action_pressed("right") || Input.is_action_pressed("left"):
 		direction.y=0
@@ -68,6 +67,7 @@ func get_damage(damage:int):
 		player_dead.emit()
 		print("I DEAD")
 	hitted_time_expired=ON_HIT_TIME
+	velocity= Vector2(randf_range(0.1,1.0),randf_range(0.1,1.0))
 	current_object_state=object_state.NOT_EXIST
 
 func handle_collisions(delta):
@@ -85,6 +85,7 @@ func handle_not_exist(delta):
 	anim_player.play("not_exist")
 
 func move_camera(pos):
+	print(pos)
 	camera.limit_bottom=pos.y
 	camera.limit_top=pos.y
 	camera.limit_left=pos.x
@@ -92,13 +93,13 @@ func move_camera(pos):
 
 func manage_camera(pos:Vector2):
 	var camera_pos=Vector2(camera.limit_left, camera.limit_bottom)
-	if int(global_position.y)<int(camera_pos.y-screen_size.y/(2*camera.zoom.y)):
+	if int(global_position.y)<int(camera_pos.y+GameManager.CAMERA_Y_BIAS-screen_size.y/(2*camera.zoom.y)):
 		move_camera(Vector2(camera_pos.x,camera_pos.y-screen_size.y/camera.zoom.y))
-	elif int(global_position.y)>int(camera_pos.y+screen_size.y/(2*camera.zoom.y)):
+	elif int(global_position.y)>int(camera_pos.y+GameManager.CAMERA_Y_BIAS+screen_size.y/(2*camera.zoom.y)):
 		move_camera(Vector2(camera_pos.x,camera_pos.y+screen_size.y/camera.zoom.y))
-	elif int(global_position.x)<int(camera_pos.x-screen_size.x/(2*camera.zoom.x)):
+	elif int(global_position.x)<int(camera_pos.x+GameManager.CAMERA_X_BIAS-screen_size.x/(2*camera.zoom.x)):
 		move_camera(Vector2(camera_pos.x-screen_size.x/camera.zoom.x,camera_pos.y))
-	elif int(global_position.x)>int(camera_pos.x+screen_size.x/(2*camera.zoom.x)):
+	elif int(global_position.x)>int(camera_pos.x+GameManager.CAMERA_X_BIAS+screen_size.x/(2*camera.zoom.x)):
 		move_camera(Vector2(camera_pos.x+screen_size.x/camera.zoom.x,camera_pos.y))
 
 func _physics_process(delta: float) -> void:
@@ -125,3 +126,7 @@ func _physics_process(delta: float) -> void:
 		handle_hit(delta)
 	handle_collisions(delta)	
 	move_and_slide()
+
+func shade():
+	if anim_player!=null:
+		anim_player.play("shade_camera")

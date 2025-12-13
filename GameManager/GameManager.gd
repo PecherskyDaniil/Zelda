@@ -10,6 +10,10 @@ var player: CharacterBody2D=null
 var current_level:Node2D = null
 var level_count=0
 var player_global_pos:Vector2
+
+const CAMERA_Y_BIAS=108
+const CAMERA_X_BIAS=-192
+
 func _set_world(node:Node2D):
 	world=node
 	
@@ -28,5 +32,5 @@ func _load_level():
 		world.add_child(current_level)
 	if player:
 		current_level._place_character(player)
-	var map = current_level.random_level
+	var map = node.random_level
 	level_changed.emit(map)
