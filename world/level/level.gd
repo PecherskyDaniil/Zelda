@@ -12,6 +12,7 @@ var random_level:String
 @onready var teleport_scene:PackedScene = preload("res://objects/teleport.tscn")
 @onready var enemy_scene:PackedScene=preload("res://enemy/enemy.tscn")
 @onready var crate_scene:PackedScene=preload("res://objects/crate.tscn")
+@onready var trader_scene:PackedScene=preload("res://objects/trader.tscn")
 @export var teleport_closed_default_state:bool=true
 
 var level_size:Vector2i
@@ -34,6 +35,10 @@ func generate_special_level(level_path:String)->void:
 	teleport.global_position=Vector2(lg.get_teleport_pos())
 	teleport.closed=teleport_closed_default_state
 	spawn_pos=Vector2(lg.get_teleport_pos())
+	if lg.shop_pos!=null:
+		var trader:Node=trader_scene.instantiate()
+		self.add_child(trader)
+		trader.global_position=lg.shop_pos
 	add_child(teleport)
 	place_enemies(enemy_count)
 	place_crates(crates_count)
@@ -79,6 +84,7 @@ func place_crates(crates_count:int):
 
 func _on_enemy_killed():
 	enemy_count-=1
+	GameManager.add_coins(randi_range(1,10))
 	if enemy_count<=0:
 		teleport.closed=false
 

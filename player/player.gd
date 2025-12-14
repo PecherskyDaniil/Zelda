@@ -8,8 +8,6 @@ signal player_dead
 
 var hitted_time_expired:float=0
 
-var coins:float=0.0
-var keys:int=0
 var hit_time=0
 
 @onready var anim_player=$AnimationPlayer

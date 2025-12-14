@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4rl23mxwjgdn"]
+
+[ext_resource type="Script" uid="uid://b2t15ivj5uxo4" path="res://world/level/level.gd" id="1_d6kiw"]
+[ext_resource type="TileSet" uid="uid://cjubk1akc4c54" path="res://world/level/base.tres" id="2_fum68"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_d6kiw")
+
+[node name="floor_and_walls" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_fum68")
+
+[node name="objects" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_fum68")

@@ -11,6 +11,9 @@ var BASE_WALL_TILE=Vector2i(14,0)
 var FLOOR_TILE=Vector2i(1,2)
 var teleport_pos=Vector2i(0,0)
 
+var shop_pos:Vector2i
+
+
 var size:Vector2i=Vector2i(0,0)
 const MORPHOLOGY_TEMPLATES: Dictionary = {
 	# Угловые стены
@@ -51,12 +54,14 @@ func generate_from_png(base_tile_map:TileMapLayer,objects_tile_map:TileMapLayer,
 		for y in range(grid[0].size()):
 			if grid[x][y] == 1:  # Стена
 				base_tile_map.set_cell(Vector2i(x, y), 0, BASE_WALL_TILE)
-			elif grid[x][y] == 0 or grid[x][y] == 3 or grid[x][y]==2:  # Пол
+			elif grid[x][y] == 0 or grid[x][y] == 3 or grid[x][y]==2 or grid[x][y]==4:  # Пол
 				base_tile_map.set_cell(Vector2i(x, y), 0, FLOOR_TILE)
 				if  grid[x][y] == 3:
 					objects_tile_map.set_cell(Vector2i(x,y),0,Vector2i(randi_range(3,5),5))
 				if  grid[x][y] == 2:
 					teleport_pos=objects_tile_map.map_to_local(Vector2i(x,y))
+				if grid[x][y]==4:
+					shop_pos=objects_tile_map.map_to_local(Vector2i(x,y))
 	# 4. Применяем морфологические шаблоны
 	apply_morphology_templates(base_tile_map,grid)
 func load_image_to_grid(image_path: String) -> Array:
@@ -85,6 +90,8 @@ func load_image_to_grid(image_path: String) -> Array:
 				grid[x][y] = 3
 			elif color == Color.GREEN:
 				grid[x][y] = 2
+			elif color == Color.BLUE:
+				grid[x][y]=4
 			else:
 				grid[x][y] = 0
 	
