@@ -1,14 +1,30 @@
-[gd_scene load_steps=11 format=3 uid="uid://cpkm0apb18y3c"]
+[gd_scene load_steps=12 format=3 uid="uid://cpkm0apb18y3c"]
 
+[ext_resource type="Script" uid="uid://0fnv3nvjxrv5" path="res://hud/hud.gd" id="1_0ivg5"]
 [ext_resource type="Script" uid="uid://deho7nyp7e3f" path="res://hud/Health.gd" id="1_2gk58"]
 [ext_resource type="Script" uid="uid://du1673iuvtkr2" path="res://hud/trader_hud.gd" id="1_fjv1a"]
 [ext_resource type="PackedScene" uid="uid://ttf4opv4vuiv" path="res://hud/container.tscn" id="2_318vg"]
-[ext_resource type="Texture2D" uid="uid://c8wsr7wne7t1u" path="res://items/sword1.png" id="3_318vg"]
+[ext_resource type="PackedScene" uid="uid://gxvvais6hvep" path="res://hud/trade_container.tscn" id="3_0ivg5"]
 [ext_resource type="PackedScene" uid="uid://bo7g48ddsqmd7" path="res://hud/map.tscn" id="4_w8tcp"]
 [ext_resource type="Script" uid="uid://b3j1gly8kl5tu" path="res://hud/coins_label.gd" id="5_svhta"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_w8tcp"]
 font_color = Color(0.766361, 0.783581, 7.70092e-07, 1)
+
+[sub_resource type="Animation" id="Animation_fjv1a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:label_settings:font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [16]
+}
 
 [sub_resource type="Animation" id="Animation_svhta"]
 resource_name = "changed_coins"
@@ -26,21 +42,6 @@ tracks/0/keys = {
 "values": [16, 20, 16]
 }
 
-[sub_resource type="Animation" id="Animation_fjv1a"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:label_settings:font_size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [16]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0ivg5"]
 _data = {
 &"RESET": SubResource("Animation_fjv1a"),
@@ -50,6 +51,7 @@ _data = {
 [node name="HUD" type="CanvasLayer"]
 scale = Vector2(3, 3)
 transform = Transform2D(3, 0, 0, 3, 0, 0)
+script = ExtResource("1_0ivg5")
 
 [node name="trader_hud" type="Control" parent="."]
 visible = false
@@ -72,9 +74,19 @@ offset_bottom = 216.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="trader_hud/CenterContainer"]
 layout_mode = 2
+theme_override_constants/separation = 35
 
 [node name="HBoxContainer" type="HBoxContainer" parent="trader_hud/CenterContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="Trade_container" parent="trader_hud/CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_0ivg5")]
+position = Vector2(68.3333, -8.66667)
+
+[node name="Trade_container2" parent="trader_hud/CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_0ivg5")]
+position = Vector2(-29, -8.66667)
+
+[node name="Trade_container3" parent="trader_hud/CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_0ivg5")]
+position = Vector2(17.6667, -8.66667)
 
 [node name="CloseButton" type="Button" parent="trader_hud/CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -96,7 +108,6 @@ script = ExtResource("1_2gk58")
 
 [node name="Container" parent="." instance=ExtResource("2_318vg")]
 position = Vector2(216, 12.6667)
-item = ExtResource("3_318vg")
 
 [node name="Container2" parent="." instance=ExtResource("2_318vg")]
 position = Vector2(178.667, 12.6667)

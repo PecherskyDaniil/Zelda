@@ -7,7 +7,7 @@ const WALL_COLOR := Color.BLACK
 const FLOOR_COLOR := Color.WHITE
 const OBJECT_COLOR:= Color.YELLOW
 const EMPTY_COLOR := Color(0, 0, 0, 0)  # Прозрачный
-var BASE_WALL_TILE=Vector2i(14,0)
+var BASE_WALL_TILE=Vector2i(12,0)
 var FLOOR_TILE=Vector2i(1,2)
 var teleport_pos=Vector2i(0,0)
 

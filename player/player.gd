@@ -16,12 +16,16 @@ var current_object_state:object_state=object_state.EXIST
 var speed:float=200.0
 var idle_name="idle_front"
 
-
+@onready var hands:Node2D=get_node("hands")
 @onready var sword:Node2D=get_node("hands/sword1")
 
 
 @onready var camera:Camera2D=$Camera2D
 @onready var screen_size = get_viewport_rect().size
+@onready var hud=$HUD
+var bow:Node2D
+func _ready() -> void:
+	hud.set_sword(sword)
 
 func handle_idle(delta):
 	var direction=Input.get_vector("left","right","up","down")
@@ -39,15 +43,23 @@ func handle_walk(delta):
 		current_move_state=move_state.IDLE
 	if direction==Vector2.DOWN:
 		sword.rotation=deg_to_rad(0)
+		if bow!=null:
+			bow.rotation=deg_to_rad(0)
 		idle_name="idle_front"
 	if direction==Vector2.UP:
 		sword.rotation=deg_to_rad(180)
+		if bow!=null:
+			bow.rotation=deg_to_rad(180)
 		idle_name="idle_back"
 	if direction==Vector2.LEFT:
 		sword.rotation=deg_to_rad(90)
+		if bow!=null:
+			bow.rotation=deg_to_rad(90)
 		idle_name="idle_left"
 	if direction==Vector2.RIGHT:
 		sword.rotation=deg_to_rad(-90)
+		if bow!=null:
+			bow.rotation=deg_to_rad(-90)
 		idle_name="idle_right"
 	velocity=direction.normalized()*speed
 
@@ -59,6 +71,8 @@ func handle_hit(delta):
 	
 
 func get_damage(damage:int):
+	if current_object_state==object_state.NOT_EXIST:
+		return
 	GameManager.player_health-=damage
 	GameManager.health_changed.emit()
 	if GameManager.player_health<=0:
@@ -128,3 +142,15 @@ func _physics_process(delta: float) -> void:
 func shade():
 	if anim_player!=null:
 		anim_player.play("shade_camera")
+		
+func set_sword(new_sword:Node2D):
+	hands.remove_child(sword)
+	hands.add_child(new_sword)
+	hud.set_sword(new_sword)
+	sword=new_sword
+func set_bow(new_bow:Node2D):
+	if bow!=null:
+		hands.remove_child(bow)
+	hands.add_child(new_bow)
+	hud.set_bow(new_bow)
+	bow=new_bow

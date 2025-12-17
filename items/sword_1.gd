@@ -4,15 +4,18 @@ extends Node2D
 @onready var anim=$AnimationPlayer
 @onready var hit_area:Area2D=$Area2D
 @export var damage=10.0
+@onready var sprite:Sprite2D=get_node("Sprite2D")
+@export var texture:Texture2D
 const HIT_TIME:float=0.5
 var hit_time:float=0
 func _ready() -> void:
+	texture=sprite.texture
 	anim.play("idle")
 	
 func _process(delta: float) -> void:
 	if hit_time>0.0:
 		handle_hit(delta)
-		
+
 		
 func hit():
 	hit_time=HIT_TIME

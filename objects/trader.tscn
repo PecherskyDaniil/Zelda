@@ -3,9 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://cuydhgdowkgto" path="res://objects/trader.png" id="1_0o50g"]
 [ext_resource type="Script" uid="uid://bdj5go0kny1ii" path="res://objects/trader.gd" id="1_dfu25"]
 
-[sub_resource type="Animation" id="Animation_dfu25"]
-resource_name = "ready"
-length = 0.1
+[sub_resource type="Animation" id="Animation_lk46b"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -35,8 +34,9 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_lk46b"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_dfu25"]
+resource_name = "ready"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

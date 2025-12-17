@@ -51,7 +51,7 @@ func _load_level():
 		world.remove_child(current_level)
 		current_level.queue_free()
 	var node:Node2D = level.instantiate()
-	if level_count==2:
+	if level_count==4:
 		node.teleport_closed_default_state=false
 		node.enemy_count=0
 		node.crates_count=0

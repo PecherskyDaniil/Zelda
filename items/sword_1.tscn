@@ -157,6 +157,7 @@ size = Vector2(32, 26)
 
 [node name="sword1" type="Node2D"]
 script = ExtResource("1_mr1q8")
+texture = ExtResource("1_1mxkw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-3.8147e-06, 1.90735e-06)
