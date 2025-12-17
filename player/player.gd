@@ -5,7 +5,7 @@ enum object_state{EXIST,NOT_EXIST}
 var ON_HIT_TIME:float=3.0
 
 signal player_dead
-
+signal camera_moved(position:Vector2)
 var hitted_time_expired:float=0
 
 var hit_time=0
@@ -19,13 +19,15 @@ var idle_name="idle_front"
 @onready var hands:Node2D=get_node("hands")
 @onready var sword:Node2D=get_node("hands/sword1")
 
-
 @onready var camera:Camera2D=$Camera2D
 @onready var screen_size = get_viewport_rect().size
 @onready var hud=$HUD
 var bow:Node2D
 func _ready() -> void:
+	camera_moved.connect(GameManager.on_camera_moved)
+	camera.make_current()
 	hud.set_sword(sword)
+		
 
 func handle_idle(delta):
 	var direction=Input.get_vector("left","right","up","down")
@@ -97,7 +99,7 @@ func handle_not_exist(delta):
 	anim_player.play("not_exist")
 
 func move_camera(pos):
-	print(pos)
+	camera_moved.emit(pos)
 	camera.limit_bottom=pos.y
 	camera.limit_top=pos.y
 	camera.limit_left=pos.x
@@ -154,3 +156,5 @@ func set_bow(new_bow:Node2D):
 	hands.add_child(new_bow)
 	hud.set_bow(new_bow)
 	bow=new_bow
+
+	

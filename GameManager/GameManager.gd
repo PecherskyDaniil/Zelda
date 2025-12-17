@@ -14,6 +14,7 @@ var current_level:Node2D = null
 var level_count=0
 var player_global_pos:Vector2
 
+var pause_menu:Control
 var coins:int=0
 
 const CAMERA_Y_BIAS=108
@@ -21,7 +22,10 @@ const CAMERA_X_BIAS=-192
 
 func _set_world(node:Node2D):
 	world=node
-	
+
+func _set_pause_menu(control:Control):
+	pause_menu=control
+
 func _set_player(character:CharacterBody2D):
 	player=character
 
@@ -64,6 +68,10 @@ func _load_level():
 		current_level._place_character(player)
 	var map = node.random_level
 	level_changed.emit(map)
+
+func on_camera_moved(pos:Vector2):
+	pause_menu.global_position.x=pos.x-384.0
+	pause_menu.global_position.y=pos.y
 
 func add_coins(money:int):
 	coins+=money
