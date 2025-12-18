@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://v31rugh2owo2" path="res://hud/marker.png" id="2_iim1n"]
 
 [node name="Map" type="Node2D"]
+scale = Vector2(0.6, 0.6)
 script = ExtResource("1_0d7hu")
 
 [node name="Map" type="TextureRect" parent="."]

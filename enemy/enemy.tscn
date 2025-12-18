@@ -31,7 +31,5 @@ shape = SubResource("CircleShape2D_ofsxj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="vision_area"]
 shape = SubResource("CircleShape2D_ppra6")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ofsxj")

@@ -68,8 +68,7 @@ func handle_walk(delta):
 func handle_hit(delta):
 	velocity=Vector2(0,0)
 	sword.hit()
-	hit_time=sword.HIT_TIME
-	current_move_state=move_state.HIT
+	hit_time=sword.HIT_TIME+1.0
 	
 
 func get_damage(damage:int):
@@ -79,7 +78,9 @@ func get_damage(damage:int):
 	GameManager.health_changed.emit()
 	if GameManager.player_health<=0:
 		player_dead.emit()
-		print("I DEAD")
+		shade()
+		queue_free()
+		GameManager._death()
 	hitted_time_expired=ON_HIT_TIME
 	velocity= Vector2(randf_range(0.1,1.0),randf_range(0.1,1.0))
 	current_object_state=object_state.NOT_EXIST
@@ -107,13 +108,13 @@ func move_camera(pos):
 
 func manage_camera(pos:Vector2):
 	var camera_pos=Vector2(camera.limit_left, camera.limit_bottom)
-	if int(global_position.y)<int(camera_pos.y+GameManager.CAMERA_Y_BIAS-screen_size.y/(2*camera.zoom.y)):
-		move_camera(Vector2(camera_pos.x,camera_pos.y-screen_size.y/camera.zoom.y))
-	elif int(global_position.y)>int(camera_pos.y+GameManager.CAMERA_Y_BIAS+screen_size.y/(2*camera.zoom.y)):
-		move_camera(Vector2(camera_pos.x,camera_pos.y+screen_size.y/camera.zoom.y))
-	elif int(global_position.x)<int(camera_pos.x+GameManager.CAMERA_X_BIAS-screen_size.x/(2*camera.zoom.x)):
+	if int(global_position.y)<int(camera_pos.y+38-screen_size.y/(2*camera.zoom.y)):
+		move_camera(Vector2(camera_pos.x,camera_pos.y+38-screen_size.y/camera.zoom.y))
+	elif int(global_position.y)>int(camera_pos.y+screen_size.y/(2*camera.zoom.y)):
+		move_camera(Vector2(camera_pos.x,camera_pos.y-38+screen_size.y/camera.zoom.y))
+	elif int(global_position.x)<int(camera_pos.x-screen_size.x/(2*camera.zoom.x)):
 		move_camera(Vector2(camera_pos.x-screen_size.x/camera.zoom.x,camera_pos.y))
-	elif int(global_position.x)>int(camera_pos.x+GameManager.CAMERA_X_BIAS+screen_size.x/(2*camera.zoom.x)):
+	elif int(global_position.x)>int(camera_pos.x+screen_size.x/(2*camera.zoom.x)):
 		move_camera(Vector2(camera_pos.x+screen_size.x/camera.zoom.x,camera_pos.y))
 
 func _physics_process(delta: float) -> void:
@@ -124,19 +125,15 @@ func _physics_process(delta: float) -> void:
 			handle_idle(delta)
 		move_state.WALK:
 			handle_walk(delta)
-		move_state.HIT:
-			if hit_time>0:
-				hit_time-=delta
-			else:
-				current_move_state=move_state.IDLE
 	
 	match current_object_state:
 		object_state.EXIST:
 			handle_exist(delta)
 		object_state.NOT_EXIST:
 			handle_not_exist(delta)
-	
-	if Input.is_action_pressed("hit") and current_move_state!=move_state.HIT:
+	if hit_time>0:
+		hit_time-=delta
+	if Input.is_action_pressed("hit") and hit_time<=0:
 		handle_hit(delta)
 	handle_collisions(delta)	
 	move_and_slide()

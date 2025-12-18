@@ -1,7 +1,8 @@
 extends Node
 
 var level=preload("res://world/level/level.tscn")
-var MAX_PLAYER_HEALTH:int = 40
+const START_HEALTH:int=6
+var MAX_PLAYER_HEALTH:int = START_HEALTH
 var player_health:int = MAX_PLAYER_HEALTH
 signal level_changed(map)
 signal health_changed(current, max)
@@ -48,9 +49,7 @@ func _load_hub():
 	level_changed.emit(map)
 
 func _load_level():
-	
 	level_count+=1
-	print(level_count)
 	if current_level:
 		world.remove_child(current_level)
 		current_level.queue_free()
@@ -60,6 +59,10 @@ func _load_level():
 		node.enemy_count=0
 		node.crates_count=0
 		node.level_path="res://world/shop/shop.png"
+	if level_count==1:
+		node.enemy_count=0
+		node.crates_count=0
+		node.is_boss=true
 	#node.generate_random_level()
 	current_level=node
 	if world:
@@ -76,3 +79,22 @@ func on_camera_moved(pos:Vector2):
 func add_coins(money:int):
 	coins+=money
 	coins_changed.emit(coins)
+
+func lock_player():
+	current_level.create_wall(Vector2i(5,11))
+	current_level.create_wall(Vector2i(6,11))
+	current_level.create_wall(Vector2i(7,11))
+	current_level.create_wall(Vector2i(8,11))
+	current_level.create_wall(Vector2i(9,11))
+	current_level.create_wall(Vector2i(10,11))
+
+func _death():
+	player=null
+	world=null
+	current_level=null
+	level_count=0
+	MAX_PLAYER_HEALTH = START_HEALTH
+	player_health = MAX_PLAYER_HEALTH
+	var death_scene=load("res://main/death_scene.tscn")
+	get_tree().change_scene_to_packed(death_scene)
+	

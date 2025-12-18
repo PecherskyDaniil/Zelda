@@ -10,11 +10,12 @@ var floor:Vector2i=Vector2i(1,2)
 var spawn_pos=Vector2(0,0)
 var random_level:String
 @onready var teleport_scene:PackedScene = preload("res://objects/teleport.tscn")
-@onready var enemy_scene:PackedScene=preload("res://enemy/enemy.tscn")
+@onready var enemies=[preload("res://enemy/enemy.tscn"),preload("res://shooting enemy/shooting_enemy.tscn")]
+@onready var boss_scene = preload("res://Boss/boss.tscn")
 @onready var crate_scene:PackedScene=preload("res://objects/crate.tscn")
 @onready var trader_scene:PackedScene=preload("res://objects/trader.tscn")
 @export var teleport_closed_default_state:bool=true
-
+@export var is_boss = false
 var level_size:Vector2i
 @export var enemy_count:int=10
 @export var crates_count:int=20
@@ -24,6 +25,8 @@ var level_size:Vector2i
 func _ready() -> void:
 	if level_path!="":
 		generate_special_level(level_path)
+	elif is_boss:
+		generate_boss_level()
 	else:
 		generate_random_level()
 
@@ -43,6 +46,22 @@ func generate_special_level(level_path:String)->void:
 	place_enemies(enemy_count)
 	place_crates(crates_count)
 
+func create_wall(pos):
+	tile_map.set_cell(pos,0,wall)
+	
+func generate_boss_level():
+	var lg=level_generator.new()
+	random_level="res://world/boss_level/boss_level.png"
+	lg.generate_from_png(tile_map,objects_tile_map,random_level)
+	level_size=lg.size
+	teleport.global_position=Vector2(lg.get_teleport_pos())
+	teleport.closed=teleport_closed_default_state
+	spawn_pos=Vector2(lg.get_teleport_pos())
+	add_child(teleport)
+	var boss=boss_scene.instantiate()
+	boss.global_position=Vector2(200,40)
+	add_child(boss)
+	
 func generate_random_level() -> void:
 	var level_files := []
 	var dir := DirAccess.open("res://world/level_structures/")
@@ -65,7 +84,7 @@ func place_enemies(enemy_count:int):
 		var tile:TileData=tile_map.get_cell_tile_data(pos)
 		if tile!=null and tile.get_collision_polygons_count(0)==0:
 			placed_enemies+=1
-			var enemy=enemy_scene.instantiate()
+			var enemy=enemies[randi_range(0,enemies.size()-1)].instantiate()
 			place_object(enemy,pos)
 			enemy.enemy_killed.connect(_on_enemy_killed)
 

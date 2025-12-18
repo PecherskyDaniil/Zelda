@@ -7,7 +7,7 @@ signal enemy_killed
 @export var change_direction_time: float = 2.0
 
 @onready var damage_area: Area2D = $damage_area
-
+@onready var items=[load("res://objects/healing_potion.tscn"),load("res://objects/heart.tscn")]
 
 var target_node: Node2D = null
 var stalk_timer: float = 0.0
@@ -33,10 +33,10 @@ func is_visible_on_player_camera(pos:Vector2) -> bool:
 	var viewport = get_viewport()
 	var viewport_size = viewport.get_visible_rect().size
 	return (
-		pos.x < camera.limit_left+GameManager.CAMERA_X_BIAS+viewport_size.x/(camera.zoom.x*2) and
-		pos.x > camera.limit_left+GameManager.CAMERA_X_BIAS-viewport_size.x/(camera.zoom.x*2) and
-		pos.y < camera.limit_top+GameManager.CAMERA_Y_BIAS+viewport_size.y/(camera.zoom.y*2) and
-		pos.y > camera.limit_top+GameManager.CAMERA_Y_BIAS-viewport_size.y/(camera.zoom.y*2)
+		pos.x < camera.limit_left+viewport_size.x/(camera.zoom.x*2) and
+		pos.x > camera.limit_left-viewport_size.x/(camera.zoom.x*2) and
+		pos.y < camera.limit_top+viewport_size.y/(camera.zoom.y*2) and
+		pos.y > camera.limit_top-viewport_size.y/(camera.zoom.y*2)
 	)
 
 func _ready():
@@ -80,4 +80,11 @@ func _on_damage_area_body_entered(body):
 func get_hit(damage):
 	enemy_killed.emit()
 	queue_free()
+	if randi_range(0,10)==0:
+		var loot = items[randi_range(0, items.size()-1)].instantiate()
+		loot.global_position=global_position
+		GameManager.world.add_child(loot)
+	
+	
+	
 # Для визуализации направления (опционально)

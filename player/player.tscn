@@ -25,7 +25,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Camera2D/ColorRect:modulate")
+tracks/1/path = NodePath("ColorRect:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -73,7 +73,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D/ColorRect:modulate")
+tracks/0/path = NodePath("ColorRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -89,7 +89,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D/ColorRect:modulate")
+tracks/0/path = NodePath("ColorRect:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -134,17 +134,17 @@ libraries = {
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(197, 100)
 zoom = Vector2(3, 3)
-limit_left = 384
-limit_top = 0
-limit_right = 384
-limit_bottom = 0
-
-[node name="ColorRect" type="ColorRect" parent="Camera2D"]
-modulate = Color(1, 1, 1, 0)
-offset_left = -196.0
-offset_top = -108.0
-offset_right = 214.0
-offset_bottom = 148.0
-color = Color(0, 0, 0, 1)
+limit_left = 192
+limit_top = 70
+limit_right = 192
+limit_bottom = 70
 
 [node name="HUD" parent="." instance=ExtResource("4_yw30f")]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 1.0
+offset_top = -8.0
+offset_right = 1270.0
+offset_bottom = 786.0
+color = Color(0, 0, 0, 1)
