@@ -59,7 +59,7 @@ func _load_level():
 		node.enemy_count=0
 		node.crates_count=0
 		node.level_path="res://world/shop/shop.png"
-	if level_count==1:
+	if level_count==9:
 		node.enemy_count=0
 		node.crates_count=0
 		node.is_boss=true

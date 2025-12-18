@@ -85,4 +85,5 @@ func get_hit(damage):
 		invincible_timer=5.0
 	if health<=0:
 		enemy_killed.emit()
+		GameManager._death()
 		queue_free()
