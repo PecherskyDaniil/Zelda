@@ -81,12 +81,12 @@ func add_coins(money:int):
 	coins_changed.emit(coins)
 
 func lock_player():
-	current_level.create_wall(Vector2i(5,11))
-	current_level.create_wall(Vector2i(6,11))
-	current_level.create_wall(Vector2i(7,11))
-	current_level.create_wall(Vector2i(8,11))
-	current_level.create_wall(Vector2i(9,11))
-	current_level.create_wall(Vector2i(10,11))
+	current_level.create_wall(Vector2i(5,12))
+	current_level.create_wall(Vector2i(6,12))
+	current_level.create_wall(Vector2i(7,12))
+	current_level.create_wall(Vector2i(8,12))
+	current_level.create_wall(Vector2i(9,12))
+	current_level.create_wall(Vector2i(10,12))
 
 func _death():
 	player=null
@@ -98,3 +98,12 @@ func _death():
 	var death_scene=load("res://main/death_scene.tscn")
 	get_tree().change_scene_to_packed(death_scene)
 	
+func _win():
+	player=null
+	world=null
+	current_level=null
+	level_count=0
+	MAX_PLAYER_HEALTH = START_HEALTH
+	player_health = MAX_PLAYER_HEALTH
+	var win_scene=load("res://main/win.tscn")
+	get_tree().change_scene_to_packed(win_scene)

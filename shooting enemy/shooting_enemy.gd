@@ -37,7 +37,7 @@ func _ready():
 	damage_area.body_entered.connect(_on_damage_area_body_entered)
 
 func _physics_process(delta):
-	if is_visible_on_player_camera(global_position):
+	if is_visible_on_player_camera(global_position) and GameManager.player:
 		shoot_time-=delta
 		look_at(GameManager.player.global_position)
 		if shoot_time<=0:

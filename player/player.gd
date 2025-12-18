@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 enum move_state{IDLE,WALK, HIT}
 enum object_state{EXIST,NOT_EXIST}
-var ON_HIT_TIME:float=3.0
+var ON_HIT_TIME:float=1.0
 
 signal player_dead
 signal camera_moved(position:Vector2)

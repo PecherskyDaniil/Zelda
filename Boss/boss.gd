@@ -43,8 +43,8 @@ func summon():
 	minion1.global_position=Vector2(randf_range(80,300),randf_range(100,150))
 	var minion2=minion.instantiate()
 	minion2.global_position=Vector2(randf_range(80,300),randf_range(100,150))
-	GameManager.add_child(minion1)
-	GameManager.add_child(minion2)
+	GameManager.world.add_child(minion1)
+	GameManager.world.add_child(minion2)
 
 
 	
@@ -85,5 +85,5 @@ func get_hit(damage):
 		invincible_timer=5.0
 	if health<=0:
 		enemy_killed.emit()
-		GameManager._death()
 		queue_free()
+		GameManager._win()
