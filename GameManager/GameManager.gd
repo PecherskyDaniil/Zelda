@@ -23,7 +23,7 @@ const CAMERA_Y_BIAS=108
 const CAMERA_X_BIAS=-192
 func _set_audio(node:AudioStreamPlayer):
 	stream_player=node
-	stream_player.volume_db=linear_to_db(0.01)
+	stream_player.volume_db=linear_to_db(1.0)
 
 func _set_world(node:Node2D):
 	world=node
@@ -82,7 +82,7 @@ func _load_level():
 		node.enemy_count=0
 		node.crates_count=0
 		node.level_path="res://world/shop/shop.png"
-	if level_count==1:
+	if level_count==5:
 		node.enemy_count=0
 		node.crates_count=0
 		node.is_boss=true

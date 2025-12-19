@@ -3,6 +3,7 @@ extends Node2D
 
 @onready var player_scene = preload("res://player/Player.tscn")
 @onready var main= $Menu/main
+@onready var texture= $TextureRect
 @onready var settings=$Menu/settings
 @onready var pause_menu=$Pause
 @onready var world=$world
@@ -28,6 +29,7 @@ func _on_settings_button_pressed() -> void:
 func _on_play_button_pressed() -> void:
 	game_started=true
 	main.visible=false
+	texture.visible=false
 	GameManager._load_hub()
 	world.add_child(player)
 	
