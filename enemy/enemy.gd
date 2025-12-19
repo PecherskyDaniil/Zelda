@@ -12,7 +12,7 @@ signal enemy_killed
 var target_node: Node2D = null
 var stalk_timer: float = 0.0
 var direction_timer: float = 0.0
-
+var dead = false
 var current_dir:Vector2=self.global_position
 
 var walk_time:float=0.0
@@ -79,12 +79,15 @@ func _on_damage_area_body_entered(body):
 		walk_time=TIME_TO_WALK
 
 func get_hit(damage):
-	enemy_killed.emit()
+	if !dead:
+		enemy_killed.emit()
+		dead=true
+		if randi_range(0,10)==0:
+			var loot = items[randi_range(0, items.size()-1)].instantiate()
+			loot.global_position=global_position
+			GameManager.world.add_child(loot)
 	anim_player.play("death")
-	if randi_range(0,10)==0:
-		var loot = items[randi_range(0, items.size()-1)].instantiate()
-		loot.global_position=global_position
-		GameManager.world.add_child(loot)
+	
 	
 	
 	

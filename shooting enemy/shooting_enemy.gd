@@ -43,7 +43,12 @@ func _physics_process(delta):
 		print(sprite.rotation)
 		if sprite.rotation>deg_to_rad(90):
 			sprite.flip_h=true
-		sprite.look_at(GameManager.player.global_position)
+		if (GameManager.player.global_position.x<global_position.x):
+			sprite.flip_v=true
+			sprite.look_at(GameManager.player.global_position)
+		else:
+			sprite.flip_v=false
+			sprite.look_at(GameManager.player.global_position)
 		if shoot_time<=0:
 			shoot()
 			shoot_time=SHOOT_TIME

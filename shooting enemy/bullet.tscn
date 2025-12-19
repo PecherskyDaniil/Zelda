@@ -97,6 +97,7 @@ script = ExtResource("1_2gwnb")
 
 [node name="TurretBullet" type="Sprite2D" parent="."]
 texture = ExtResource("2_2gwnb")
+flip_h = true
 hframes = 2
 
 [node name="Area2D" type="Area2D" parent="."]

@@ -6,6 +6,7 @@ extends Node2D
 @onready var settings=$Menu/settings
 @onready var pause_menu=$Pause
 @onready var world=$world
+@onready var stream=$AudioStreamPlayer
 var player:Node2D
 var game_started=false
 
@@ -14,7 +15,7 @@ func _ready() -> void:
 	GameManager._set_player(player)
 	GameManager._set_world(world)
 	GameManager._set_pause_menu(pause_menu)
-	
+	GameManager._set_audio(stream)
 func _input(event: InputEvent) -> void:
 	if Input.is_action_pressed("pause") and game_started:
 		pause()
@@ -43,3 +44,8 @@ func pause():
 
 func _on_exit_button_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_h_slider_value_changed(value: float) -> void:
+	var bus = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_volume_linear(bus, value)

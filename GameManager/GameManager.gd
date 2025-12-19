@@ -14,12 +14,16 @@ var player: CharacterBody2D=null
 var current_level:Node2D = null
 var level_count=0
 var player_global_pos:Vector2
+var stream_player:AudioStreamPlayer=null
 
 var pause_menu:Control
 var coins:int=0
 
 const CAMERA_Y_BIAS=108
 const CAMERA_X_BIAS=-192
+func _set_audio(node:AudioStreamPlayer):
+	stream_player=node
+	stream_player.volume_db=linear_to_db(0.01)
 
 func _set_world(node:Node2D):
 	world=node
@@ -29,8 +33,27 @@ func _set_pause_menu(control:Control):
 
 func _set_player(character:CharacterBody2D):
 	player=character
+	
+func _play_simple_music():
+	if stream_player:
+		var music:AudioStream = load("res://music/parapapapam.mp3")
+		stream_player.stream=music
+		stream_player.play()
+
+func _play_boss_music():
+	if stream_player:
+		stream_player.stream=load("res://music/soundtrack1.mp3")
+		stream_player.play()
+		
+func _play_win_music():
+	if stream_player:
+		stream_player.stream=load("res://music/win_music.mp3")
+		stream_player.play()
+
+
 
 func _load_hub():
+	_play_simple_music()
 	if current_level:
 		world.remove_child(current_level)
 		current_level.queue_free()
@@ -59,10 +82,11 @@ func _load_level():
 		node.enemy_count=0
 		node.crates_count=0
 		node.level_path="res://world/shop/shop.png"
-	if level_count==9:
+	if level_count==1:
 		node.enemy_count=0
 		node.crates_count=0
 		node.is_boss=true
+		_play_boss_music()
 	#node.generate_random_level()
 	current_level=node
 	if world:
@@ -73,8 +97,8 @@ func _load_level():
 	level_changed.emit(map)
 
 func on_camera_moved(pos:Vector2):
-	pause_menu.global_position.x=pos.x-384.0
-	pause_menu.global_position.y=pos.y
+	pause_menu.global_position.x=pos.x - 192
+	pause_menu.global_position.y=pos.y - 108
 
 func add_coins(money:int):
 	coins+=money

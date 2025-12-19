@@ -1,0 +1,19 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dhh1583tweh5j"]
+
+[ext_resource type="FontFile" uid="uid://cvpl4kvlumkvh" path="res://pixel.ttf" id="1_d8s7t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
+bg_color = Color(0.6893924, 0.2515704, 0.3235883, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mne5f"]
+bg_color = Color(0.95073706, 0.690062, 0.039747145, 0.7058824)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7mycd"]
+bg_color = Color(0.8509804, 0.63529414, 0.039215688, 0.5803922)
+
+[resource]
+default_font = ExtResource("1_d8s7t")
+default_font_size = 40
+Button/styles/disabled = SubResource("StyleBoxFlat_lquwl")
+Button/styles/hover = SubResource("StyleBoxFlat_mne5f")
+Button/styles/normal = SubResource("StyleBoxFlat_7mycd")

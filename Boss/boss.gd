@@ -5,7 +5,7 @@ signal enemy_killed
 @export var damage: int = 1
 
 @onready var damage_area: Area2D = $damage_area
-@onready var shield=$BossShield
+@onready var anim=$AnimationPlayer
 @onready var laser=preload("res://Boss/laser.tscn")
 @onready var minion=preload("res://shooting enemy/shooting_enemy.tscn")
 var CAST_TIME:float=4.0
@@ -52,7 +52,9 @@ func _physics_process(delta):
 	if is_visible_on_player_camera(global_position):
 		if !is_wall_created:
 			GameManager.lock_player()
+			GameManager.player.global_position=Vector2(100,100)
 			is_wall_created=true
+			
 		if cast_timer>0:
 			cast_timer-=delta
 		else:
@@ -68,10 +70,9 @@ func _physics_process(delta):
 		if invincible_timer>0:
 			invincible_timer-=delta
 			is_invincible=true
-			shield.visible=true
 		else:
+			anim.play("idle")
 			is_invincible=false
-			shield.visible=false
 
 #=== ОБРАБОТКА ТРИГГЕРОВ ===
 func _on_damage_area_body_entered(body):
@@ -80,6 +81,7 @@ func _on_damage_area_body_entered(body):
 
 func get_hit(damage):
 	if !is_invincible:
+		anim.play("got_hit")
 		health-=1
 		is_invincible=true
 		invincible_timer=5.0

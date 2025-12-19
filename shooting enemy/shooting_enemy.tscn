@@ -1,15 +1,17 @@
 [gd_scene load_steps=10 format=3 uid="uid://ci1wdgycorsq0"]
 
 [ext_resource type="Script" uid="uid://b3rqs8vc23i36" path="res://shooting enemy/shooting_enemy.gd" id="1_hioqd"]
-[ext_resource type="Texture2D" uid="uid://dc84731sdkfec" path="res://shooting enemy/turret-face.png" id="2_hioqd"]
 [ext_resource type="Texture2D" uid="uid://dofd60oj11mdn" path="res://shooting enemy/turret-base.png" id="2_psknp"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hioqd"]
+load_path = "res://.godot/imported/turret-face.png-df4ec0de0867ec6abd8d12b97f35c84e.ctex"
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_hioqd"]
-radius = 14.0357
+radius = 16.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_psknp"]
 radius = 9.0
-height = 28.0
+height = 34.0
 
 [sub_resource type="Animation" id="Animation_psknp"]
 length = 0.001
@@ -23,7 +25,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_hioqd")]
+"values": [SubResource("CompressedTexture2D_hioqd")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -75,7 +77,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_hioqd")]
+"values": [SubResource("CompressedTexture2D_hioqd")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -127,7 +129,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_hioqd")]
+"values": [SubResource("CompressedTexture2D_hioqd")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -182,18 +184,19 @@ scale = Vector2(0.53125, 0.5625)
 texture = ExtResource("2_psknp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-1, 0)
+position = Vector2(-1, -3.9999998)
 scale = Vector2(0.8, 0.8)
-texture = ExtResource("2_hioqd")
+texture = SubResource("CompressedTexture2D_hioqd")
 vframes = 10
 
 [node name="damage_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="damage_area"]
+position = Vector2(-1, 3)
 shape = SubResource("CircleShape2D_hioqd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 1.5708
+position = Vector2(-1, 3)
 shape = SubResource("CapsuleShape2D_psknp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

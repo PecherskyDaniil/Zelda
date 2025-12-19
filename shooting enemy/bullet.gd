@@ -10,6 +10,8 @@ func _ready() -> void:
 	anim.play("idle")
 
 func _process(delta: float) -> void:
+	print(move_to)
+	look_at(global_position+SPEED*delta*move_to)
 	global_position+=SPEED*delta*move_to
 	life_time-=delta
 	if life_time<=0:

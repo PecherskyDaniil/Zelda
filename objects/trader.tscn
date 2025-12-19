@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dt6igkiv6y37v"]
 
-[ext_resource type="Texture2D" uid="uid://cuydhgdowkgto" path="res://objects/trader.png" id="1_0o50g"]
 [ext_resource type="Script" uid="uid://bdj5go0kny1ii" path="res://objects/trader.gd" id="1_dfu25"]
+[ext_resource type="Texture2D" uid="uid://ggl3yl8i0txk" path="res://objects/seller.png" id="2_dfu25"]
 
 [sub_resource type="Animation" id="Animation_lk46b"]
 length = 0.001
@@ -69,7 +69,7 @@ script = ExtResource("1_dfu25")
 modulate = Color(2, 2, 2, 1)
 position = Vector2(-3.8147e-06, 0.5)
 scale = Vector2(0.026148, 0.0267857)
-texture = ExtResource("1_0o50g")
+texture = ExtResource("2_dfu25")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
