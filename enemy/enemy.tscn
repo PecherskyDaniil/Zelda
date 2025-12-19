@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ckwn538lsourk"]
+[gd_scene load_steps=11 format=3 uid="uid://ckwn538lsourk"]
 
-[ext_resource type="Texture2D" uid="uid://cor4sd8mn7ctl" path="res://enemy/enemy.png" id="1_2mvqj"]
 [ext_resource type="Script" uid="uid://cghj05y2d0mq0" path="res://enemy/enemy.gd" id="1_ofsxj"]
+[ext_resource type="Texture2D" uid="uid://c63c0ca8hn3p3" path="res://enemy/enemy-idle.png" id="2_ofsxj"]
+[ext_resource type="Texture2D" uid="uid://cft80pnpa0qyc" path="res://enemy/enemy-death.png" id="3_ppra6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ofsxj"]
 radius = 12.0416
@@ -13,13 +14,141 @@ radius = 29.0689
 radius = 7.0
 height = 22.0
 
+[sub_resource type="Animation" id="Animation_p200p"]
+resource_name = "idle"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_ofsxj")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0, 3, 0]
+}
+
+[sub_resource type="Animation" id="Animation_pmsee"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_ofsxj")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_1wwld"]
+resource_name = "death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_ppra6")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y5vj3"]
+_data = {
+&"RESET": SubResource("Animation_pmsee"),
+&"death": SubResource("Animation_1wwld"),
+&"idle": SubResource("Animation_p200p")
+}
+
 [node name="enemy" type="CharacterBody2D"]
 script = ExtResource("1_ofsxj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(4, -2)
 scale = Vector2(0.0489865, 0.0456081)
-texture = ExtResource("1_2mvqj")
+texture = ExtResource("2_ofsxj")
+hframes = 4
 
 [node name="damage_area" type="Area2D" parent="."]
 
@@ -33,3 +162,10 @@ shape = SubResource("CircleShape2D_ppra6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ofsxj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_y5vj3")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

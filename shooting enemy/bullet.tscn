@@ -1,51 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://cedsjr5s4l7g6"]
 
 [ext_resource type="Script" uid="uid://fqx0bokbaj8w" path="res://shooting enemy/bullet.gd" id="1_2gwnb"]
-[ext_resource type="Texture2D" uid="uid://d0nlh2w6d65v2" path="res://shooting enemy/turret_BULLET.png" id="1_qo7xw"]
+[ext_resource type="Texture2D" uid="uid://uwufn76veya" path="res://shooting enemy/turret-bullet.png" id="2_2gwnb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qo7xw"]
 radius = 6.0
-
-[sub_resource type="Animation" id="Animation_2gwnb"]
-resource_name = "idle"
-length = 0.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("TurretBullet:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("1_qo7xw")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("TurretBullet:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [2]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("TurretBullet:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0, 1]
-}
 
 [sub_resource type="Animation" id="Animation_jqixd"]
 length = 0.001
@@ -59,7 +18,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("1_qo7xw")]
+"values": [ExtResource("2_2gwnb")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -86,6 +45,47 @@ tracks/2/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_2gwnb"]
+resource_name = "idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TurretBullet:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_2gwnb")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TurretBullet:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TurretBullet:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 1]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_trysu"]
 _data = {
 &"RESET": SubResource("Animation_jqixd"),
@@ -96,7 +96,7 @@ _data = {
 script = ExtResource("1_2gwnb")
 
 [node name="TurretBullet" type="Sprite2D" parent="."]
-texture = ExtResource("1_qo7xw")
+texture = ExtResource("2_2gwnb")
 hframes = 2
 
 [node name="Area2D" type="Area2D" parent="."]

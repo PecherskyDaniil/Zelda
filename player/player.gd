@@ -24,12 +24,14 @@ var idle_name="idle_front"
 @onready var hud=$HUD
 var bow:Node2D
 func _ready() -> void:
+	anim_player.play("idle")
 	camera_moved.connect(GameManager.on_camera_moved)
 	camera.make_current()
 	hud.set_sword(sword)
 		
 
 func handle_idle(delta):
+	anim_player.play("idle")
 	var direction=Input.get_vector("left","right","up","down")
 	if direction!=Vector2.ZERO:
 		current_move_state=move_state.WALK
@@ -44,21 +46,25 @@ func handle_walk(delta):
 	if direction==Vector2.ZERO:
 		current_move_state=move_state.IDLE
 	if direction==Vector2.DOWN:
+		anim_player.play("run_down")
 		sword.rotation=deg_to_rad(0)
 		if bow!=null:
 			bow.rotation=deg_to_rad(0)
 		idle_name="idle_front"
 	if direction==Vector2.UP:
+		anim_player.play("run_up")
 		sword.rotation=deg_to_rad(180)
 		if bow!=null:
 			bow.rotation=deg_to_rad(180)
 		idle_name="idle_back"
 	if direction==Vector2.LEFT:
+		anim_player.play("run_left")
 		sword.rotation=deg_to_rad(90)
 		if bow!=null:
 			bow.rotation=deg_to_rad(90)
 		idle_name="idle_left"
 	if direction==Vector2.RIGHT:
+		anim_player.play("run_right")
 		sword.rotation=deg_to_rad(-90)
 		if bow!=null:
 			bow.rotation=deg_to_rad(-90)
@@ -90,14 +96,15 @@ func handle_collisions(delta):
 
 
 func handle_exist(delta):
-	anim_player.play("exist")
+	pass
+	#anim_player.play("exist")
 	
 func handle_not_exist(delta):
 	hitted_time_expired-=delta
 	if hitted_time_expired<=0.0:
 		hitted_time_expired=0.0
 		current_object_state=object_state.EXIST
-	anim_player.play("not_exist")
+	#anim_player.play("not_exist")
 
 func move_camera(pos):
 	camera_moved.emit(pos)

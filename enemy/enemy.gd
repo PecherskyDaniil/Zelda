@@ -8,7 +8,7 @@ signal enemy_killed
 
 @onready var damage_area: Area2D = $damage_area
 @onready var items=[load("res://objects/healing_potion.tscn"),load("res://objects/heart.tscn")]
-
+@onready var anim_player=get_node("AnimationPlayer")
 var target_node: Node2D = null
 var stalk_timer: float = 0.0
 var direction_timer: float = 0.0
@@ -40,6 +40,7 @@ func is_visible_on_player_camera(pos:Vector2) -> bool:
 	)
 
 func _ready():
+	anim_player.play("idle")
 	# Начинаем с случайного направления
 	move_direction = possible_directions[randi_range(0, 3)]
 	
@@ -79,7 +80,7 @@ func _on_damage_area_body_entered(body):
 
 func get_hit(damage):
 	enemy_killed.emit()
-	queue_free()
+	anim_player.play("death")
 	if randi_range(0,10)==0:
 		var loot = items[randi_range(0, items.size()-1)].instantiate()
 		loot.global_position=global_position
@@ -88,3 +89,8 @@ func get_hit(damage):
 	
 	
 # Для визуализации направления (опционально)
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name=="death":
+		queue_free()

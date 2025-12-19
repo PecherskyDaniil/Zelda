@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-
 signal enemy_killed
 @export var move_speed: float = 100.0
 @export var damage: int = 1
@@ -10,6 +9,7 @@ signal enemy_killed
 @onready var items=[load("res://objects/healing_potion.tscn"),load("res://objects/heart.tscn")]
 @onready var bullet_scene = load("res://shooting enemy/bullet.tscn")
 @onready var anim=$AnimationPlayer
+@onready var sprite:Sprite2D=$Sprite2D
 var target_node: Node2D = null
 var stalk_timer: float = 0.0
 var direction_timer: float = 0.0
@@ -37,9 +37,13 @@ func _ready():
 	damage_area.body_entered.connect(_on_damage_area_body_entered)
 
 func _physics_process(delta):
+		
 	if is_visible_on_player_camera(global_position) and GameManager.player:
 		shoot_time-=delta
-		look_at(GameManager.player.global_position)
+		print(sprite.rotation)
+		if sprite.rotation>deg_to_rad(90):
+			sprite.flip_h=true
+		sprite.look_at(GameManager.player.global_position)
 		if shoot_time<=0:
 			shoot()
 			shoot_time=SHOOT_TIME

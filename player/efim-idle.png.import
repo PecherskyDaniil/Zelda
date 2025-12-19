@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w6ah758p0sur"
-path="res://.godot/imported/turret_BASE.png-dbda3abf248673c5004942403bbc0aff.ctex"
+uid="uid://626gej4gfq6g"
+path="res://.godot/imported/efim-idle.png-1742cbc4028c94842996800a1db9fccc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://shooting enemy/turret_BASE.png"
-dest_files=["res://.godot/imported/turret_BASE.png-dbda3abf248673c5004942403bbc0aff.ctex"]
+source_file="res://player/efim-idle.png"
+dest_files=["res://.godot/imported/efim-idle.png-1742cbc4028c94842996800a1db9fccc.ctex"]
 
 [params]
 
